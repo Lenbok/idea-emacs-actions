@@ -1,0 +1,69 @@
+<idea-plugin version="2">
+  <id>com.rtg.idea.emacsactions</id>
+  <name>Emacs Actions</name>
+  <version>1.0.6</version>
+  <vendor email="len@realtimegenomics.com" url="http://www.realtimegenomics.com">RTG</vendor>
+
+  <description><![CDATA[
+      Adds extra emacs-inspired editor actions to IDEA
+      ]]></description>
+
+  <change-notes><![CDATA[
+  <p>1.0.6</p>
+  <ul>
+    <li>Split off from RTG Idea Plugin</li>
+  </ul>
+      ]]>
+  </change-notes>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="3245"/>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+      <action id="Emacs Actions.MoveToIndent"
+              class="com.rtg.idea.emacsactions.MoveToIndent"
+              text="Move to first non-whitespace"
+              description="Move caret to first non-whitespace">
+          <keyboard-shortcut keymap="$default" first-keystroke="meta m"/>
+          <add-to-group anchor="last" group-id="EditorActions"/>
+      </action>
+      <action id="Emacs Actions.CollapseWhitespaceToNothing"
+              class="com.rtg.idea.emacsactions.CollapseWhitespaceToNothing"
+              text="Collapse Whitespace to Nothing"
+              description="Collapse whitespace to nothing">
+          <keyboard-shortcut keymap="$default" first-keystroke="meta back_slash"/>
+          <add-to-group anchor="last" group-id="EditorActions"/>
+      </action>
+      <action id="Emacs Actions.CollapseWhitespaceToSingle"
+              class="com.rtg.idea.emacsactions.CollapseWhitespaceToSingle"
+              text="Collapse Whitespace to Single"
+              description="Collapse whitespace to single">
+          <keyboard-shortcut keymap="$default" first-keystroke="meta space"/>
+          <add-to-group anchor="last" group-id="EditorActions"/>
+      </action>
+      <action id="Emacs Actions.DeleteIndentation"
+              class="com.rtg.idea.emacsactions.DeleteIndentation"
+              text="Delete Indentation"
+              description="Join this line to previous and fix up join with whitespace.">
+          <keyboard-shortcut keymap="$default" first-keystroke="shift alt 6"/>
+          <add-to-group anchor="last" group-id="EditorActions"/>
+      </action>
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+</idea-plugin>
