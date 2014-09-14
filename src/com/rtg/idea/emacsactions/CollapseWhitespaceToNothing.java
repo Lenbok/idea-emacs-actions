@@ -1,69 +1,61 @@
 package com.rtg.idea.emacsactions;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataKeys;
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.Caret;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.impl.EditorImpl;
-import com.intellij.openapi.vfs.ReadonlyStatusHandler;
+import com.intellij.openapi.editor.actionSystem.EditorAction;
+import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
+import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 
 /**
  * @author alan
  */
-public class CollapseWhitespaceToNothing extends AnAction {
+public class CollapseWhitespaceToNothing extends EditorAction {
 
-  String replaceWith() {
-    return "";
+  public CollapseWhitespaceToNothing(EditorActionHandler defaultHandler) {
+    super(defaultHandler);
   }
 
-  public void actionPerformed(AnActionEvent e) {
-    Editor editor = e.getData(DataKeys.EDITOR);
-    if (editor == null) {
-      return;
-    }
-    final EditorImpl ed = (EditorImpl) editor;
-    CharSequence cs = ed.getDocument().getCharsSequence();
+  public CollapseWhitespaceToNothing() {
+    this(new CollapseHandler(""));
+  }
 
-    int currCaretOffset = editor.getCaretModel().getOffset();
-
-    int line = editor.getCaretModel().getLogicalPosition().line;
-    int i1 = ed.getDocument().getLineStartOffset(line);
-    int i2 = ed.getDocument().getLineEndOffset(line);
-
-    if (i1 == i2) {
-      return;
+  static class CollapseHandler extends EditorWriteActionHandler {
+    final String mReplacewith;
+    CollapseHandler(String replaceWith) {
+      mReplacewith = replaceWith;
     }
 
-    ReadonlyStatusHandler.getInstance(e.getProject()).ensureFilesWritable();
+    @Override
+    public void executeWriteAction(Editor editor, Caret caret, DataContext dataContext) {
+      Document document = editor.getDocument();
 
-    int lowOffset = currCaretOffset - 1;
-    while (Character.isWhitespace(cs.charAt(lowOffset)) && lowOffset >= i1) {
-      lowOffset--;
-    }
-    int highOffset = currCaretOffset;
-    while (Character.isWhitespace(cs.charAt(highOffset)) && highOffset < i2) {
-      highOffset++;
-    }
-
-//    ed.getDocument().replaceString(lowOffset + 1, highOffset, replaceWith());
-
-    final int start = lowOffset + 1;
-    final int end = highOffset;
-
-    final Application application = ApplicationManager.getApplication();
-    Runnable runnable = new Runnable() {
-      public void run() {
-        ApplicationManager.getApplication().runWriteAction(new Runnable() {
-          public void run() {
-            ed.getDocument().replaceString(start, end, replaceWith());
-          }
-        });
+      if (editor == null || document == null || !document.isWritable()) {
+        return;
       }
-    };
 
-    CommandProcessor.getInstance().executeCommand(e.getProject(), runnable, "RTG.collapsewhitespace", null);
+      int line = editor.getCaretModel().getLogicalPosition().line;
+      int i1 = editor.getDocument().getLineStartOffset(line);
+      int i2 = editor.getDocument().getLineEndOffset(line);
+
+      if (i1 == i2) {
+        return;
+      }
+
+      int currCaretOffset = editor.getCaretModel().getOffset();
+      CharSequence cs = document.getCharsSequence();
+      int lowOffset = currCaretOffset - 1;
+      while (Character.isWhitespace(cs.charAt(lowOffset)) && lowOffset >= i1) {
+        lowOffset--;
+      }
+      int highOffset = currCaretOffset;
+      while (Character.isWhitespace(cs.charAt(highOffset)) && highOffset < i2) {
+        highOffset++;
+      }
+      final int start = lowOffset + 1;
+      final int end = highOffset;
+      document.replaceString(start, end, mReplacewith);
+    }
   }
 }

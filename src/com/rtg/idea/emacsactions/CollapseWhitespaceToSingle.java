@@ -5,8 +5,7 @@ package com.rtg.idea.emacsactions;
  */
 public class CollapseWhitespaceToSingle extends CollapseWhitespaceToNothing {
 
-  @Override
-  String replaceWith() {
-    return " ";
+  public CollapseWhitespaceToSingle() {
+    super(new CollapseHandler(" "));
   }
 }
