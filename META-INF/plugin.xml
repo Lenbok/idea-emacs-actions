@@ -4,9 +4,20 @@
   <version>1.0.6</version>
   <vendor email="len@realtimegenomics.com" url="http://www.realtimegenomics.com">RTG</vendor>
 
-  <description><![CDATA[
-      Adds extra emacs-inspired editor actions to IDEA
-      ]]></description>
+  <description><![CDATA[<html>
+      <p>Adds extra emacs-inspired editor actions to IDEA.  Adds the following actions that can be bound to keys:</p>
+      <ul>
+
+      <li>MoveToIndent - Moves the carat to the first non-whitespace character on the line (back-to-indentation).</li>
+
+      <li>CollapseWhitespaceToNothing - Removes all whitespace around the current point (delete-horizontal-space).</li>
+
+      <li>CollapseWhitespaceToSingle - Removes all but a single whitespace around the current point (just-one-space).</li>
+
+      <li>DeleteIndentation - Join this line to the previous and fix up the whitespace at the join (delete-indentation).</li>
+
+      </ul>
+      </html>]]></description>
 
   <change-notes><![CDATA[
   <p>1.0.6</p>
