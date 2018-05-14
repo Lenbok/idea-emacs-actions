@@ -20,9 +20,9 @@
       </html>]]></description>
 
   <change-notes><![CDATA[
-  <p>1.0.6</p>
+  <p>1.0.7</p>
   <ul>
-    <li>Split off from RTG Idea Plugin</li>
+    <li>Added CycleWhitespace action</li>
   </ul>
       ]]>
   </change-notes>
@@ -63,6 +63,12 @@
               text="Collapse Whitespace to Single"
               description="Collapse whitespace to single">
           <keyboard-shortcut keymap="$default" first-keystroke="alt space"/>
+          <add-to-group anchor="last" group-id="EditorActions"/>
+      </action>
+      <action id="Emacs Actions.CycleWhitespace"
+              class="com.rtg.idea.emacsactions.CycleWhitespace"
+              text="Cycle Whitespace Collapsing"
+              description="Cycle whitespace collapsing">
           <add-to-group anchor="last" group-id="EditorActions"/>
       </action>
       <action id="Emacs Actions.DeleteIndentation"
