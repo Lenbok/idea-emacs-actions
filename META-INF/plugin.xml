@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.rtg.idea.emacsactions</id>
   <name>Emacs Actions</name>
-  <version>1.0.6</version>
+  <version>1.0.8</version>
   <vendor email="len@realtimegenomics.com" url="http://www.realtimegenomics.com">RTG</vendor>
 
   <description><![CDATA[<html>
@@ -16,13 +16,15 @@
 
       <li>DeleteIndentation - Join this line to the previous and fix up the whitespace at the join (delete-indentation).</li>
 
+      <li>CycleWhitespace - Manipulate whitespace around current point in a smart way (cycle-spacing).</li>
+
       </ul>
       </html>]]></description>
 
   <change-notes><![CDATA[
-  <p>1.0.7</p>
+  <p>1.0.8</p>
   <ul>
-    <li>Added CycleWhitespace action</li>
+    <li>Packaging fix</li>
   </ul>
       ]]>
   </change-notes>
@@ -55,14 +57,12 @@
               class="com.rtg.idea.emacsactions.CollapseWhitespaceToNothing"
               text="Collapse Whitespace to Nothing"
               description="Collapse whitespace to nothing">
-          <keyboard-shortcut keymap="$default" first-keystroke="alt back_slash"/>
           <add-to-group anchor="last" group-id="EditorActions"/>
       </action>
       <action id="Emacs Actions.CollapseWhitespaceToSingle"
               class="com.rtg.idea.emacsactions.CollapseWhitespaceToSingle"
               text="Collapse Whitespace to Single"
               description="Collapse whitespace to single">
-          <keyboard-shortcut keymap="$default" first-keystroke="alt space"/>
           <add-to-group anchor="last" group-id="EditorActions"/>
       </action>
       <action id="Emacs Actions.CycleWhitespace"
